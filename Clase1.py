@@ -141,3 +141,121 @@ def devolver_valor_si_es_par_sino_el_que_sigue (numero:int) -> int:
     
 # return numero if numero % 2 == 0 else numero (hecho por el profe)
 
+# Ejercicio 5.3
+
+def devolver_el_doble_si_es_multiplo3_el_triple_si_es_multiplo9 (numero:int) -> int:
+    if numero % 9 == 0:
+        return numero * 3
+    if numero % 3 == 0:
+        return numero * 2
+    else:
+        return numero
+    
+# Ejercicio 5.4
+
+def lindo_nombre (str) -> str:
+    if len(str) >= 5:
+        return "Tu nombre tiene muchas letras!"
+    else:
+        return "Tu nombre tiene menos de 5 caracteres"
+    
+# Ejercicio 5.5
+
+def el_rango (numero:int) -> str:
+    if numero < 5:
+        return "Menor a 5"
+    if numero > 10 and numero < 20:
+        return "Entre 10 y 20"
+    if numero > 20:
+        return "Mayor a 20"
+    else:
+        return "Su número no está en ningún rango conocido"
+    
+# Ejercicio 5.6
+
+def vacaciones_o_trabajo (sexo:str, edad:int) -> str:
+    if edad < 18:
+        return "Andá de vacaciones"
+    if edad >= 60 and sexo == "F":
+        return "Andá de vacaciones"
+    if edad >= 65 and sexo == "M":
+        return "Andá de vacaciones"
+    else:
+        return "Te toca trabajar"
+
+# Ejercicio 6.1
+
+def numeros_del_1_al_10() -> None:
+    x:int = 1
+    while x <= 10:
+        print (x)
+        x += 1
+
+# Ejercicio 6.2 (hecho antes)
+
+# Ejercicio 6.3 
+
+def imprimir_eco_10_veces() -> None:
+    x:int = 1
+    while x <= 10:
+        print ("eco")
+        x += 1
+
+# Ejercicio 6.4
+
+def cuenta_regresiva (inicio:int) -> None:
+    while inicio >= 1:
+        print (inicio)
+        inicio -= 1
+    print ("Despegue")
+
+# Ejercicio 6.5
+
+def viajes_en_el_tiempo (partida:int, llegada:int) -> str:
+    while partida > llegada:
+        print ("Viajó un año al pasado, estamos en el año " + str(partida - 1)) 
+        partida -= 1
+
+# Ejercicio 6.6
+
+def viajes_en_el_tiempo_aristoteles (partida:int) -> str:
+    while partida > 384:
+        print ("Viajó veinte años al pasado, estamos en el año " + str(partida - 20)) 
+        partida -= 20
+
+# Ejercicio 7.1 
+
+def numeros_del_1_al_10_7() -> None:
+    for x in range (1,11,1):
+        print (x)
+
+# Ejercicio 7.2
+
+def numeros_pares_entre_10_y_40_7() -> None: 
+    for x in range (10,42,2):
+        print (x)
+
+# Ejercicio 7.3
+
+def imprimir_eco_10_veces_7() -> None:
+    for x in range (1,11,1):
+        print ("eco")
+
+# Ejercicio 7.4
+
+def cuenta_regresiva_7 (inicio:int) -> None:
+    for inicio in range (inicio, 0, -1):
+        print (inicio)
+    print ("Despegue")
+
+# Ejercicio 7.5
+
+def viajes_en_el_tiempo_7 (partida:int, llegada:int) -> str:
+    for partida in range (partida, llegada, -1):
+        print ("Viajó un año al pasado, estamos en el año " + str(partida - 1)) 
+
+# Ejercicio 7.6
+
+def viajes_en_el_tiempo_aristoteles_7 (partida:int) -> str:
+    for partida in range (partida, 384, -1):
+        print ("Viajó veinte años al pasado, estamos en el año " + str(partida - 20)) 
