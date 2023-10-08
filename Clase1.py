@@ -259,3 +259,16 @@ def viajes_en_el_tiempo_7 (partida:int, llegada:int) -> str:
 def viajes_en_el_tiempo_aristoteles_7 (partida:int) -> str:
     for partida in range (partida, 384, -1):
         print ("Viajó veinte años al pasado, estamos en el año " + str(partida - 20)) 
+
+# ------------------------------ GUIA 7 ------------------------------
+
+# Ejercicio 1.1
+
+def pertenece (lista:list[int], numero:int) -> bool:
+    i:int = (len(lista) - 1)
+    while numero != lista [i] and i != 0:
+        i -= 1
+    if i == 0:
+        return False
+    else:
+        return True
