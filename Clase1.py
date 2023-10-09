@@ -264,11 +264,144 @@ def viajes_en_el_tiempo_aristoteles_7 (partida:int) -> str:
 
 # Ejercicio 1.1
 
-def pertenece (lista:list[int], numero:int) -> bool:
+def pertenece (lista:list, numero:int) -> bool:
     i:int = (len(lista) - 1)
-    while numero != lista [i] and i != 0:
+    while numero != lista [i] and i != -1:
         i -= 1
-    if i == 0:
+    if i == -1:
         return False
     else:
         return True
+
+# Ejercicio 1.2
+
+def divideATodos (lista:list, numero:int) -> bool:
+    for num in lista:
+        if num % numero != 0:
+            return False
+    return True
+    
+# Ejercicio 1.3
+
+def sumaTotal (lista:list) -> int:
+    total:int = 0 
+    for num in lista:
+        total += num
+    return total
+
+# Ejercicio 1.4
+
+def ordenados (lista:list) -> bool:
+    i:int = len(lista)-1 
+    for posicion in range (0,i,1):
+        if lista[posicion] > lista[posicion + 1]:
+            return False
+    return True
+        
+# Ejercicio 1.5
+
+def palabraLarga (lista:[str]) -> bool:
+    for palabra in lista:
+        if len(palabra) >= 7:
+            return True
+    return False
+
+def palabraLargaMal (lista:list) -> bool:
+    i:int = len(lista) 
+    for posicion in range (0,i,1):
+        if len(lista[posicion]) >= 7:
+            return True
+    return False
+
+# Ejercicio 1.6
+
+def palindromo (palabra:str) -> bool:
+    inicio:int = 0
+    final:int = len(palabra)-1
+    while(inicio != final and inicio < final):
+        if(palabra[inicio] != palabra[final]):
+            return False
+        inicio += 1
+        final -=1
+    
+    return True
+
+# Ejercicio 1.7
+
+def contraseña (palabra:str) -> str:
+    if len(palabra) > 8 and tieneMinusculas(palabra) and tieneMayusculas(palabra) and tieneNumeros(palabra):
+        return "Verde"
+    elif len(palabra) < 5:
+        return "Rojo"
+    else:
+        return "Amarillo"
+
+def tieneMinusculas (palabra:str) -> bool:
+    for letra in palabra:
+        if letra.islower():
+            return True
+    return False
+
+def tieneMayusculas (palabra:str) -> bool:
+    for letra in palabra:
+        if letra.isupper():
+            return True
+    return False
+
+def tieneNumeros (palabra:str) -> bool:
+    for letra in palabra:
+        if letra.isnumeric():
+            return True
+    return False
+
+# Ejercicio 1.8
+
+def cuentaBancaria (operaciones:list) -> int:
+    saldo:int = 0
+    operacion:[(str,int)]
+    for operacion in operaciones:
+        if operacion[0] == "I":
+            saldo += operacion[1]
+        else:
+            saldo += operacion[1]
+    return saldo
+
+# Ejercicio 1.9
+
+def vocales (palabra:str) -> bool:
+    contador:int = 0
+    vocales:str = ["a","e","i","o","u"]
+    for letra in palabra:
+        if letra.lower() in vocales:
+            contador += 1
+            vocales.remove(letra.lower())
+     
+    return contador >= 3 
+
+# Ejercicio 2.1
+
+def listaSinPares (lista:list) -> list:
+    for i in range (0, len(lista)):
+        if i % 2 == 0:
+            lista[i] = 0
+    return lista
+
+# Ejercicio 2.2
+
+def listaSinPares2 (lista:list) -> list:
+    listaPiola:list = []
+    for i in range (0, len(lista)):
+        if i % 2 == 0:
+            listaPiola.append(0)
+        else:
+            listaPiola.append(lista[i])
+    return listaPiola
+
+# Ejercicio 2.3
+
+def quitarVocales (palabra:str) -> str:
+    vocales:str = ["a","e","i","o","u"]
+    for letra in palabra:
+        if letra.lower() in vocales:
+            palabra = palabra.replace(letra, "")
+    return palabra
