@@ -405,3 +405,52 @@ def quitarVocales (palabra:str) -> str:
         if letra.lower() in vocales:
             palabra = palabra.replace(letra, "")
     return palabra
+
+# Ejercicio 2.4
+
+def reemplazarVocales (palabra:str) -> str:
+    vocales :str = ["a", "e", "i", "o", "u"]
+    for letra in palabra:
+        if letra.lower() in vocales:
+            palabra = palabra.replace(letra, "_")
+    return palabra
+    
+# Ejercicio 2.6
+
+def eliminarRepetidos (palabra:str) -> str:
+    for letra in palabra:
+        if repetido(letra, palabra):
+           palabra = palabra.replace(letra, "")
+    return palabra
+    
+def repetido(letra: str, palabra: str) -> bool:
+    if letra in palabra:
+        lista_de_caracteres = list(palabra)
+        lista_de_caracteres.remove(letra)
+        return letra in lista_de_caracteres
+    else:
+        return False
+
+# Ejercicio 3
+
+def aprobado (notas:list) -> int:
+    promedio:float = sumaTotal(notas)/len(notas)
+    if promedio >= 7 and min(notas) > 4:
+        return 1
+    elif promedio >= 4 and promedio < 7 and min(notas) > 4:
+        return 2
+    else:
+        return 3
+    
+# Ejercicio 4.1
+
+def listaEstudiantes () -> list: 
+    estudiantes:list = [1]
+    print ("Escriba los nombres de sus estudiantes y cuando finalice escriba 'listo'")
+    while True:
+        nombre = input()
+        estudiantes.append(nombre)
+        if nombre == "listo":
+            break
+    return estudiantes
+    
