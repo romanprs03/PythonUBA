@@ -1,4 +1,5 @@
 import math
+import random
 
 def imprimir_hola_mundo() -> None:
     print ("Hola Mundo")
@@ -445,7 +446,7 @@ def aprobado (notas:list) -> int:
 # Ejercicio 4.1
 
 def listaEstudiantes () -> list: 
-    estudiantes:list = [1]
+    estudiantes:list = []
     print ("Escriba los nombres de sus estudiantes y cuando finalice escriba 'listo'")
     while True:
         nombre = input()
@@ -454,3 +455,71 @@ def listaEstudiantes () -> list:
             break
     return estudiantes
     
+# Ejercicio 4.2
+
+def monederoElectronico () -> list:
+    monedero:list = []
+    print ("Indicque que operacion desea realizar")
+    while True:
+        accion = input()
+        if accion == "C":
+            print ("Indique el monto que desea cargar")
+            monto = input()
+            monedero.append(("C", monto))
+            print ("Indicque que operacion desea realizar")
+        elif accion == "D":
+            print ("Indique el monto que desea descargar")
+            monto = input ()
+            monedero.append(("D", monto))
+            print ("Indicque que operacion desea realizar")
+        elif accion == "X":
+            break
+        else:
+            print("Introduzca C, D o X")
+    return monedero
+
+# Ejercicio 4.3
+
+def sieteYMedio () -> list:
+    cartasAcumuladas:float = 0
+    historialDeCartas:list = []
+    nuevaCarta:int = random.choice ((1, 2, 3, 4, 5, 6, 7, 10, 11, 12))
+    historialDeCartas.append(nuevaCarta)
+    print ("Comienza el juego")
+    print (nuevaCarta)
+    if nuevaCarta == 10 or nuevaCarta == 11 or nuevaCarta == 12:
+        cartasAcumuladas += 0.5
+    else:
+        cartasAcumuladas += nuevaCarta
+    while cartasAcumuladas < 7.5:
+        nuevaCarta:int = random.choice ((1, 2, 3, 4, 5, 6, 7, 10, 11, 12))
+        print ("Desea sacar otra carta (S o N)")
+        respuesta = input()
+        if respuesta == "S":
+            print (nuevaCarta)
+            historialDeCartas.append(nuevaCarta)
+            if nuevaCarta == 10 or nuevaCarta == 11 or nuevaCarta == 12:
+                cartasAcumuladas += 0.5
+            else:
+                cartasAcumuladas += nuevaCarta
+        elif respuesta == "N":
+            break
+        else:
+            print ("Introduzca S o N")
+    if cartasAcumuladas <= 7.5:
+        print ("Usted suma " + str(cartasAcumuladas))
+    else:
+        print ("Ha perdido :(")
+    return historialDeCartas    
+
+# Ejercicio 5.1
+
+def perteneceACadaUno (listaDeListas:list, numero:int) -> list:
+    respuestas:list = []
+    while 0 != len(listaDeListas):
+        respuestas.append(pertenece(listaDeListas[0], numero))
+        listaDeListas.remove(listaDeListas[0])
+    return respuestas
+
+
+
