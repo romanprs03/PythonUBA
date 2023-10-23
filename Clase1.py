@@ -1,7 +1,9 @@
 import math
 import random
+from queue import Queue
+from queue import LifoQueue
 
-def imprimir_hola_mundo() -> None:
+def imprimir_hola_mundo() -> None: 
     print ("Hola Mundo")
 
 # Ejercicio 1.1 CP:
@@ -401,7 +403,7 @@ def listaSinPares2 (lista:list) -> list:
 # Ejercicio 2.3
 
 def quitarVocales (palabra:str) -> str:
-    vocales:str = ["a","e","i","o","u"]
+    vocales:str = ["a", "e", "i", "o", "u"]
     for letra in palabra:
         if letra.lower() in vocales:
             palabra = palabra.replace(letra, "")
@@ -480,25 +482,29 @@ def monederoElectronico () -> list:
 
 # Ejercicio 4.3
 
+def darNuevaCarta () -> int:
+    return random.choice((1,2,3,4,5,6,7,10,11,12))
+
 def sieteYMedio () -> list:
     cartasAcumuladas:float = 0
     historialDeCartas:list = []
-    nuevaCarta:int = random.choice ((1, 2, 3, 4, 5, 6, 7, 10, 11, 12))
+    nuevaCarta:int = darNuevaCarta()
+    figuras:list = [10,11,12]
     historialDeCartas.append(nuevaCarta)
     print ("Comienza el juego")
     print (nuevaCarta)
-    if nuevaCarta == 10 or nuevaCarta == 11 or nuevaCarta == 12:
+    if nuevaCarta in figuras:
         cartasAcumuladas += 0.5
     else:
         cartasAcumuladas += nuevaCarta
     while cartasAcumuladas < 7.5:
-        nuevaCarta:int = random.choice ((1, 2, 3, 4, 5, 6, 7, 10, 11, 12))
-        print ("Desea sacar otra carta (S o N)")
+        nuevaCarta = darNuevaCarta()
+        print ("¿Desea sacar otra carta? (S o N)")
         respuesta = input()
         if respuesta == "S":
             print (nuevaCarta)
             historialDeCartas.append(nuevaCarta)
-            if nuevaCarta == 10 or nuevaCarta == 11 or nuevaCarta == 12:
+            if nuevaCarta in figuras:
                 cartasAcumuladas += 0.5
             else:
                 cartasAcumuladas += nuevaCarta
@@ -521,5 +527,73 @@ def perteneceACadaUno (listaDeListas:list, numero:int) -> list:
         listaDeListas.remove(listaDeListas[0])
     return respuestas
 
+# ------------------------------ GUIA 8 ------------------------------
 
+# Ejercicio 1
 
+# Ejercicio 2
+
+def es_un_comentario (linea:str) -> bool:
+    for caracter in linea: 
+        if caracter != " ":
+            if caracter == "#":
+                return True
+            else:
+                return False
+
+def clonarSinComentarios (nombre_archivo: str) -> None:
+    archivo = open(nombre_archivo, "r")
+    nombre_archivo_output:str = "sinComentarios.txt"
+    archivo_output = open(nombre_archivo_output, "w")
+    for line in archivo.readlines():
+        if not es_un_comentario(line):
+            archivo_output.write(line)
+
+    archivo.close()
+    archivo_output.close()
+
+# Ejercicio 10
+
+def buscarElMaximo (p: LifoQueue) -> int:
+    valor:int = p.get()
+    while not p.empty():
+        siguiente_valor = p.get()
+        valor = max (siguiente_valor, valor)
+    return valor
+
+# Ejercicio 16.1
+
+def armarSecuencideBingo() -> Queue:
+    lista: list = list(range(0,100))
+    random.shuffle(lista)
+    bolillero: Queue = Queue()
+    for bolilla in lista:
+        bolillero.put(bolilla)
+    return bolillero
+
+def jugarCartonDeBingo (carton:list, bolillero:Queue) -> int:
+    jugadas:int = 0
+    casillas_completas:int = 0
+    while not bolillero.empty():
+        bola = bolillero.get()
+        jugadas += 1
+        if bola in carton:
+            casillas_completas += 1
+        if casillas_completas == len(carton):
+            return jugadas
+        
+bolillero = armarSecuencideBingo()
+
+# Ejercicio 19
+
+def agruparPorLongitud (nombre_archivo:str) -> dict:
+    archivo = open(nombre_archivo, "r")
+    diccionario = {}
+    for line in archivo.readlines():
+        for palabra in line.split():
+            if len(palabra) in diccionario:
+                diccionario[len(palabra)] += 1
+            else:
+                diccionario[len(palabra)] = 1
+    return diccionario
+        
