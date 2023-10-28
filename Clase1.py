@@ -2,6 +2,7 @@ import math
 import random
 from queue import Queue
 from queue import LifoQueue
+import csv
 
 def imprimir_hola_mundo() -> None: 
     print ("Hola Mundo")
@@ -529,7 +530,38 @@ def perteneceACadaUno (listaDeListas:list, numero:int) -> list:
 
 # ------------------------------ GUIA 8 ------------------------------
 
-# Ejercicio 1
+# Ejercicio 1.1
+
+def contar_lineas (nombre_archivo:str) -> int:
+    contador = 1
+    archivo = open(nombre_archivo, "r")
+    for line in archivo:
+            contador += 1
+    archivo.close()
+    return contador
+
+# Ejercicio 1.2
+
+def existe_palabra (palabra:str, nombre_archivo:str) -> bool:
+    archivo = open(nombre_archivo, "r")
+    for line in archivo:
+        if (" "+palabra+" ") in line:
+            return True
+    archivo.close()
+    return False
+
+# Ejercicio 1.3
+
+def cantidad_de_apariciones (palabra:str, nombre_archivo:str) -> int:
+    archivo = open(nombre_archivo, "r")
+    contador = 0
+    for line in archivo:
+        palabras = line.split()
+        for palabra_desconocida in palabras:
+            if palabra_desconocida == palabra:
+                contador += 1
+    archivo.close()
+    return contador
 
 # Ejercicio 2
 
@@ -552,6 +584,89 @@ def clonarSinComentarios (nombre_archivo: str) -> None:
     archivo.close()
     archivo_output.close()
 
+# Ejercicio 3
+
+def reverse_mine (lista:list) -> list:
+    lista_revertida = []
+    while lista != []:
+        lista_revertida.append(lista[-1])
+        lista.remove(lista[-1])
+    return lista_revertida
+
+def revertir_texto (nombre_archivo: str) -> None:
+    archivo = open(nombre_archivo, "r")
+    texto = archivo.readlines()
+    nuevo_archivo = open("reverso.txt", "w")
+    nuevo_archivo.writelines(reverse_mine(texto))
+
+    archivo.close()
+    nuevo_archivo.close()
+
+# Ejercicio 4
+
+def agregar_frase (frase:str, nombre_archivo:str) -> None:
+    archivo = open(nombre_archivo, "r")
+    texto_original = archivo.readlines()
+    archivo.close()
+    archivo = open(nombre_archivo, "w")
+    archivo.writelines(texto_original)
+    archivo.write("\n" + frase)
+    archivo.close()
+
+# Ejercicio 5
+
+def agregar_frase_adelante (frase:str, nombre_archivo:str) -> None:
+    archivo = open(nombre_archivo, "r")
+    texto_original = archivo.readlines()
+    archivo.close()
+    archivo = open(nombre_archivo, "w")
+    archivo.write(frase + "\n")
+    archivo.writelines(texto_original)
+    archivo.close()
+
+# Ejercicio 7
+
+def calcular_promedio (lu:str) -> float:
+    notas = []
+    archivo_csv = open ("notas.csv", "r")
+    archivo = csv.reader(archivo_csv)
+    for line in archivo:
+        if line[0] == lu:
+            notas.append(float(line[3]))
+    promedio = sum(notas)/len(notas)
+    return promedio
+    
+# Ejercicio 8
+
+def generar_nros_al_azar (n:int, desde:int, hasta:int) -> LifoQueue:
+    pila:LifoQueue = LifoQueue()
+    verificacion:list = []
+    while n != 0:
+        numero_al_azar = random.randint(desde, hasta)
+        pila.put(numero_al_azar)
+        n -= 1
+    while not pila.empty():
+        elemento = pila.get()
+        verificacion.append(elemento)
+    return verificacion 
+
+# Ejercicio 9
+
+def generador_de_copias_de_pilas (pila:LifoQueue) -> LifoQueue:
+    pila_copy:LifoQueue = LifoQueue()
+    lista = list(pila.queue)
+    for elemento in reversed(lista):
+        pila_copy.put(elemento)
+    return pila_copy
+
+def cantidad_elementos (pila:LifoQueue) -> int:
+    pila_copy = generador_de_copias_de_pilas(pila)
+    contador = 0
+    while not pila_copy.empty():
+        pila_copy.get()
+        contador += 1
+    return contador
+
 # Ejercicio 10
 
 def buscarElMaximo (p: LifoQueue) -> int:
@@ -560,6 +675,52 @@ def buscarElMaximo (p: LifoQueue) -> int:
         siguiente_valor = p.get()
         valor = max (siguiente_valor, valor)
     return valor
+
+# Ejercicio 11
+
+def esta_bien_balanceada(s: str) -> bool:
+    pila = LifoQueue()
+    for caracter in s:
+        if caracter == "(":
+            pila.put(caracter)
+        elif caracter == ")":
+            if pila.empty():
+                return False
+            pila.get()
+    return pila.empty()
+
+# Ejercicio 12
+
+def notacion_postfix (calculo:str) -> int:
+    pila:LifoQueue = LifoQueue()
+    for caracter in calculo.split():
+        if caracter.isdigit():
+            pila.put(caracter)
+        else:
+            primero = pila.get()
+            segundo = pila.get()
+            if caracter == "+":
+                resultado = int(segundo)  + int(primero) 
+                pila.put(resultado)
+            elif caracter == "-":
+                resultado = int(segundo) - int(primero) 
+                pila.put(resultado)
+            elif caracter == "*":
+                resultado = int(segundo)  * int(primero) 
+                pila.put(resultado)
+            elif caracter == "/":
+                resultado = int(segundo) / int(primero) 
+                pila.put(int(resultado))
+    
+    verificacion:list = []
+    while not pila.empty():
+        elemento = pila.get()
+        verificacion.append(elemento)
+    return verificacion 
+            
+           
+
+            
 
 # Ejercicio 16.1
 
@@ -570,6 +731,8 @@ def armarSecuencideBingo() -> Queue:
     for bolilla in lista:
         bolillero.put(bolilla)
     return bolillero
+
+# Ejercicio 16.2
 
 def jugarCartonDeBingo (carton:list, bolillero:Queue) -> int:
     jugadas:int = 0
