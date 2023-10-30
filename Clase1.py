@@ -654,9 +654,14 @@ def generar_nros_al_azar (n:int, desde:int, hasta:int) -> LifoQueue:
 
 def generador_de_copias_de_pilas (pila:LifoQueue) -> LifoQueue:
     pila_copy:LifoQueue = LifoQueue()
-    lista = list(pila.queue)
-    for elemento in reversed(lista):
-        pila_copy.put(elemento)
+    pila_aux:LifoQueue = LifoQueue()
+    while not pila.empty():
+        elemento = pila.get()
+        pila_aux.put(elemento)
+    while not pila_aux.empty():
+        nuevo_elemento = pila_aux.get()
+        pila_copy.put(nuevo_elemento)
+        pila.put(nuevo_elemento)
     return pila_copy
 
 def cantidad_elementos (pila:LifoQueue) -> int:
@@ -666,6 +671,17 @@ def cantidad_elementos (pila:LifoQueue) -> int:
         pila_copy.get()
         contador += 1
     return contador
+
+# Verificación de que no se rompa la pila
+
+#pila = LifoQueue()
+#pila.put(1)
+#pila.put(2)
+#pila.put(3)
+
+#print(pila.queue)
+#print(cantidad_elementos(pila))
+#print(pila.queue)
 
 # Ejercicio 10
 
@@ -718,9 +734,52 @@ def notacion_postfix (calculo:str) -> int:
         verificacion.append(elemento)
     return verificacion 
             
-           
+# Ejercicio 13
 
+def armar_cola_nros_al_azar () -> Queue:
+    cola:Queue = Queue()
+    n = generar_nros_al_azar(5, 10, 20)
+    for nro in n:
+        cola.put(nro)
+
+    verificacion:list = []
+    while not cola.empty():
+        elemento = cola.get()
+        verificacion.append(elemento)
+    return verificacion  
+
+# Ejercicio 14
+
+def generador_de_copias_de_colas (cola:Queue) -> Queue:
+    cola_copy:Queue = Queue()
+    cola_aux:Queue = Queue()
+    while not cola.empty():
+        elemento = cola.get()
+        cola_aux.put(elemento)
+    while not cola_aux.empty():
+        nuevo_elemento = cola_aux.get()
+        cola_copy.put(nuevo_elemento)
+        cola.put(nuevo_elemento)
+    return cola_copy
+
+def cantidad_elementos_cola (c:Queue) -> int:
+    cola_copy = generador_de_copias_de_colas(cola)
+    contador = 0
+    while not cola_copy.empty():
+        cola_copy.get()
+        contador += 1
+    return contador
             
+# Verificación de que no se rompa la cola
+
+#cola = Queue()
+#cola.put(1)
+#cola.put(2)
+#cola.put(3)
+
+#print(cola.queue)
+#print(cantidad_elementos_cola(cola))
+#print(cola.queue)
 
 # Ejercicio 16.1
 
@@ -759,4 +818,3 @@ def agruparPorLongitud (nombre_archivo:str) -> dict:
             else:
                 diccionario[len(palabra)] = 1
     return diccionario
-        
