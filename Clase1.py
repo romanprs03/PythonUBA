@@ -648,7 +648,7 @@ def generar_nros_al_azar (n:int, desde:int, hasta:int) -> LifoQueue:
     while not pila.empty():
         elemento = pila.get()
         verificacion.append(elemento)
-    return verificacion 
+    return verificacion # para convertir a la pila en lista, se puede utilizar pila.queue
 
 # Ejercicio 9
 
@@ -763,7 +763,7 @@ def generador_de_copias_de_colas (cola:Queue) -> Queue:
     return cola_copy
 
 def cantidad_elementos_cola (c:Queue) -> int:
-    cola_copy = generador_de_copias_de_colas(cola)
+    cola_copy = generador_de_copias_de_colas(c)
     contador = 0
     while not cola_copy.empty():
         cola_copy.get()
@@ -780,6 +780,16 @@ def cantidad_elementos_cola (c:Queue) -> int:
 #print(cola.queue)
 #print(cantidad_elementos_cola(cola))
 #print(cola.queue)
+
+# Ejercicio 15
+
+def buscar_el_maximo_colas (cola:Queue) -> int:
+    cola_copy = generador_de_copias_de_colas(cola)
+    lista:list = []
+    while not cola_copy.empty():
+        elemento = cola_copy.get()
+        lista.append(elemento)
+    return max(lista)
 
 # Ejercicio 16.1
 
@@ -806,6 +816,17 @@ def jugarCartonDeBingo (carton:list, bolillero:Queue) -> int:
         
 bolillero = armarSecuencideBingo()
 
+# Ejercicio 17
+
+def n_pacientes_urgentes (cola:Queue) -> int:
+    cola_copy = generador_de_copias_de_colas(cola)
+    contador: int = 0
+    while not cola_copy.empty():
+        elemento = cola_copy.get() 
+        if elemento[0] <= 3:
+            contador += 1
+    return contador
+
 # Ejercicio 19
 
 def agruparPorLongitud (nombre_archivo:str) -> dict:
@@ -818,3 +839,51 @@ def agruparPorLongitud (nombre_archivo:str) -> dict:
             else:
                 diccionario[len(palabra)] = 1
     return diccionario
+
+# Ejercicio 20
+
+def promedio_por_estudiantes_diccionario () -> dict:
+    diccionario: dict = {}
+    archivo_csv = open ("notas.csv", "r")
+    archivo = csv.reader(archivo_csv)
+    for line in archivo:
+        lu = line[0]
+        if (lu, calcular_promedio(lu)) not in diccionario:
+            diccionario[lu] = round(calcular_promedio(lu), 2)
+    return diccionario
+
+# Ejercicio 21
+
+def sin_signos (palabra: str) -> str:
+    signos: list = ['"', "!", "?", "¿", "¡", ",", ".", ":", ";", "(", ")"]
+    for letra in palabra:
+        if letra in signos:
+            palabra = palabra.replace(letra, "")
+    return palabra
+
+def lista_particular (nombre_archivo: str, palabra: str) -> list:
+    lista: list = []
+    archivo = open(nombre_archivo)
+    for line in archivo:
+        palabras = line.split()
+        for p in palabras:
+            if sin_signos(p) == palabra:
+                lista.append(palabra)
+    archivo.close()
+    return lista
+
+def la_palabra_mas_frecuente (nombre_archivo: str) -> str:
+    lista: list = []
+    lista_cantidad_apariciones: list = []
+    archivo = open(nombre_archivo)
+    for line in archivo:
+        palabras = line.split()
+        for palabra in palabras:
+            if lista_particular(nombre_archivo, palabra) not in lista:
+                lista.append(lista_particular(nombre_archivo, palabra))
+    for elemento in lista:
+        lista_cantidad_apariciones.append(len(elemento))
+    palabra_con_mayor_aparicion = lista_cantidad_apariciones.index(max(lista_cantidad_apariciones))
+    res = lista[palabra_con_mayor_aparicion][0]
+    archivo.close() 
+    return res
