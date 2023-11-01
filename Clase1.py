@@ -887,3 +887,8 @@ def la_palabra_mas_frecuente (nombre_archivo: str) -> str:
     res = lista[palabra_con_mayor_aparicion][0]
     archivo.close() 
     return res
+
+# Ejercicio 22
+
+# Ejercicio 23
+

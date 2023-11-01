@@ -126,14 +126,12 @@ def elementos_exclusivos(s: list, t: list) -> list:
 #    inglés = {"Pie": "Foot", "Dedo": "Finger", "Mano": "Hand"}
 #  se debería devolver res=2
 
-#def contar_traducciones_iguales(ingles: dict, aleman: dict) -> int:
-    #res: int = 0
-    #valores: list = []
-    #for ingles.keys() in ingles: # .keys() # .values() # .items()
-        #if ingles.keys() in aleman.keys():
-            #valores.append(ingles.values)
-            #valores.append(aleman.values)
-            
+def contar_traducciones_iguales(ingles: dict, aleman: dict) -> int:
+    res: int = 0
+    for key, value in ingles.items():
+        if key in aleman.keys() and value == aleman[key]:
+            res += 1
+    return res
 
 ##########################################################################
 ##########################################################################
