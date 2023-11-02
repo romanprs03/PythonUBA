@@ -716,13 +716,13 @@ def notacion_postfix (calculo:str) -> int:
             primero = pila.get()
             segundo = pila.get()
             if caracter == "+":
-                resultado = int(segundo)  + int(primero) 
+                resultado = int(segundo) + int(primero) 
                 pila.put(resultado)
             elif caracter == "-":
                 resultado = int(segundo) - int(primero) 
                 pila.put(resultado)
             elif caracter == "*":
-                resultado = int(segundo)  * int(primero) 
+                resultado = int(segundo) * int(primero) 
                 pila.put(resultado)
             elif caracter == "/":
                 resultado = int(segundo) / int(primero) 
@@ -861,34 +861,21 @@ def sin_signos (palabra: str) -> str:
             palabra = palabra.replace(letra, "")
     return palabra
 
-def lista_particular (nombre_archivo: str, palabra: str) -> list:
-    lista: list = []
-    archivo = open(nombre_archivo)
-    for line in archivo:
-        palabras = line.split()
-        for p in palabras:
-            if sin_signos(p) == palabra:
-                lista.append(palabra)
-    archivo.close()
-    return lista
-
 def la_palabra_mas_frecuente (nombre_archivo: str) -> str:
-    lista: list = []
-    lista_cantidad_apariciones: list = []
+    diccionario: dict = {}
     archivo = open(nombre_archivo)
     for line in archivo:
         palabras = line.split()
         for palabra in palabras:
-            if lista_particular(nombre_archivo, palabra) not in lista:
-                lista.append(lista_particular(nombre_archivo, palabra))
-    for elemento in lista:
-        lista_cantidad_apariciones.append(len(elemento))
-    palabra_con_mayor_aparicion = lista_cantidad_apariciones.index(max(lista_cantidad_apariciones))
-    res = lista[palabra_con_mayor_aparicion][0]
-    archivo.close() 
-    return res
+            palabra = sin_signos(palabra)
+            if palabra not in diccionario.keys():
+                diccionario[palabra] = 1
+            else:
+                diccionario[palabra] += 1
+    for clave, valor in diccionario.items():
+        if valor == max(diccionario.values()):
+            return clave
 
 # Ejercicio 22
 
 # Ejercicio 23
-
